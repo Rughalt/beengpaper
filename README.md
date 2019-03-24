@@ -10,8 +10,8 @@ all of your desktops.
 
 ### Installation 
 
-Download the application here, open DMG file and drag and drop the app
-into Applications folder.
+Download the application here, open `.dmg` file and drag and drop the
+app into Applications folder.
 
 ### Building the app yourself
 
@@ -26,7 +26,7 @@ python setup.py py2app
 ```
 
 ### FAQ
-**Q. But why**
+**Q. But why?**
 
 A. Because I got bored one sunday morning, and I like Bing wallpapers.
  
@@ -36,4 +36,13 @@ A. Unfortunately, Beengpaper cannot set itself as a launch program. You
 can however easily make it launch on login using macOS Preferences pane.
 Navigate to Preferences > Users and Groups > Login and add Beengpaper.
 
+### License and copyright
 
+Copyright © 2019 Antoni Sobkowicz / Dragonshorn Studios.
+
+This program is licensed under MIT license.
+
+All product names, logos, and brands are property of their respective
+owners. All company, product and service names used in this website are
+for identification purposes only. Use of these names, logos, and brands
+does not imply endorsement.

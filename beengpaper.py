@@ -1,7 +1,27 @@
 #!/usr/bin/env python
 # This Python file uses the following encoding: utf-8
+
+# Copyright (c) 2019 Antoni Sobkowicz / Dragonshorn Studios
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import urllib.request
-from subprocess import Popen, PIPE
 from threading import Timer
 import rumps
 import os
@@ -73,7 +93,7 @@ class BeengpaperApp(rumps.App):
 
     @rumps.clicked("About Beengpaper")
     def about(self, _):
-        window = rumps.alert(title='Beengpaper', message='Get your daily dose of Bing wallpapers on your desktop\nCopyright © 2019 Antoni Sobkowicz / Dragonshorn Studios, All Rights Reserved', ok=None, cancel=None, icon_path='app_icon.png')
+        window = rumps.alert(title='Beengpaper', message='Get your daily dose of Bing wallpapers on your desktop\nCopyright © 2019 Antoni Sobkowicz / Dragonshorn Studios', ok=None, cancel=None, icon_path='app_icon.png')
         window.run()
 
     def get_new_wallpaper(self):
