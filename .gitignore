@@ -1,0 +1,12 @@
+
+\.idea/
+
+venv2/
+
+venv/
+
+dist/
+
+build/
+
+bngpaper\.logoist
