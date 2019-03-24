@@ -90,6 +90,7 @@ class BeengpaperApp(rumps.App):
 
         t = Timer(30.0, self.get_new_wallpaper)
         t.start()
+        self.get_new_wallpaper()
 
     @rumps.clicked("About Beengpaper")
     def about(self, _):

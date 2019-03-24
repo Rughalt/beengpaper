@@ -8,6 +8,9 @@ all of your desktops.
 
 > First (a little bit ugly) version of Beengpaper icon
 
+### Requirements
+Beengpaper requires macOS El Captain (10.11) or later.
+
 ### Installation 
 
 Download the application here, open `.dmg` file and drag and drop the
@@ -29,6 +32,19 @@ python setup.py py2app
 **Q. But why?**
 
 A. Because I got bored one sunday morning, and I like Bing wallpapers.
+
+**Q. Names in the menu change but application does not change my
+wallpaper**
+
+A. This may be caused by one of three things:
+- You did not allow application access to System Events when it first
+  asked (you can change it under Preferences > Security)
+- Your current wallpaper setting is "Change wallpaper every ..." in
+  macOS preferences. Set wallpaper to static image to allow Beengpaper
+  to work
+- Application broke because something changed in Bing stream. If you
+  think your problem is not related to two above, pleas open an issue on
+  GitHub.
  
 **Q. How can I make Beengpaper launch on startup?**
 
