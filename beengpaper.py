@@ -35,6 +35,7 @@ configs_data = {}
 home_dir = os.path.expanduser('~')+'/.bwg'
 base_wallpaper_url = "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt="
 
+rumps.debug_mode(True)
 
 if not os.path.exists(home_dir):
     os.makedirs(home_dir)
@@ -88,16 +89,15 @@ class BeengpaperApp(rumps.App):
         self.menu['Region'].title = 'Region (%s)' % region_code[self.region]
         logging.info('Starting app')
 
-        t = Timer(30.0, self.get_new_wallpaper)
-        t.start()
-        self.get_new_wallpaper()
+        self.get_new_wallpaper(None)
 
     @rumps.clicked("About Beengpaper")
     def about(self, _):
         window = rumps.alert(title='Beengpaper', message='Get your daily dose of Bing wallpapers on your desktop\nCopyright © 2019 Antoni Sobkowicz / Dragonshorn Studios', ok=None, cancel=None, icon_path='app_icon.png')
         window.run()
 
-    def get_new_wallpaper(self):
+    @rumps.timer(60)
+    def get_new_wallpaper(self, _):
         url = base_wallpaper_url + self.region
         req = urllib.request.Request(url)
         response = urllib.request.urlopen(req)

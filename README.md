@@ -19,8 +19,9 @@ app into Applications folder.
 ### Building the app yourself
 
 Beengpaper is written in Python (Python 3.7), using rumps and appscript
-libraries. Additionally you need py2app to build the application
-package.
+libraries. Additionally you need py2app to build the application package
+and create-dmg (awesome little tool for creating dmg files you can find
+[here](https://github.com/sindresorhus/create-dmg)).
 
 ```
 git clone
