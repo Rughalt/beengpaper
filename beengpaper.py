@@ -89,17 +89,6 @@ class BeengpaperApp(rumps.App):
         self.menu['Region'].title = 'Region (%s)' % region_code[self.region]
         logging.info('Starting app')
 
-
-        se = app('System Events')
-        desktops = se.desktops.display_name.get()
-        has_multiple_wallpapers_on_desktop = False;
-        for d in desktops:
-            desk = se.desktops[its.display_name == d]
-            if len(desk.picture.get()) > 1:
-                has_multiple_wallpapers_on_desktop = True
-        if has_multiple_wallpapers_on_desktop:
-            rumps.alert(title='Beengpaper Warning', message='You have multiple wallpapers set on one of your desktops. Beengpaper may not work correctly in this setup.', ok=None, icon_path=None)
-
         self.get_new_wallpaper(None)
 
     @rumps.clicked("About Beengpaper")

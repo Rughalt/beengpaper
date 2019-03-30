@@ -6,7 +6,7 @@ all of your desktops.
 
 <img src="app_icon.png" alt="Bgnpaper Icon" width="200"/>
 
-> First (a little bit ugly) version of Beengpaper icon
+> Second (and i hope a little less ugly) version of Beengpaper icon
 
 ### Requirements
 Beengpaper requires macOS El Captain (10.11) or later.
