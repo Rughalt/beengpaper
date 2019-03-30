@@ -89,12 +89,25 @@ class BeengpaperApp(rumps.App):
         self.menu['Region'].title = 'Region (%s)' % region_code[self.region]
         logging.info('Starting app')
 
+
+        se = app('System Events')
+        desktops = se.desktops.display_name.get()
+        has_multiple_wallpapers_on_desktop = False;
+        for d in desktops:
+            desk = se.desktops[its.display_name == d]
+            if len(desk.picture.get()) > 1:
+                has_multiple_wallpapers_on_desktop = True
+        if has_multiple_wallpapers_on_desktop:
+            rumps.alert(title='Beengpaper Warning', message='You have multiple wallpapers set on one of your desktops. Beengpaper may not work correctly in this setup.', ok=None, icon_path=None)
+
         self.get_new_wallpaper(None)
 
     @rumps.clicked("About Beengpaper")
     def about(self, _):
         window = rumps.alert(title='Beengpaper', message='Get your daily dose of Bing wallpapers on your desktop\nCopyright © 2019 Antoni Sobkowicz / Dragonshorn Studios', ok=None, cancel=None, icon_path='app_icon.png')
         window.run()
+
+
 
     @rumps.timer(60)
     def get_new_wallpaper(self, _):
@@ -103,14 +116,25 @@ class BeengpaperApp(rumps.App):
         response = urllib.request.urlopen(req)
         data = json.loads(response.read())
         logging.info('Getting new wallpaper... ' + data['images'][0]['hsh'] + ' ' + data['images'][0]['url'])
-        if self.current_wallpaper_hsh != data['images'][0]['hsh']:
+
+        se = app('System Events')
+        desktops = se.desktops.display_name.get()
+
+        force_change = False
+        for d in desktops:
+            desk = se.desktops[its.display_name == d]
+            if data['images'][0]['hsh'] not in desk.picture.get()[0]:
+                force_change = True
+                logging.info('Forcing wallpaper change')
+
+        if self.current_wallpaper_hsh != data['images'][0]['hsh'] or force_change:
             try:
                 try:
                     os.remove(home_dir + "/wallpaper.png")
                 except:
                     pass
                 try:
-                    os.remove(home_dir + "/wallpaper"+self.current_wallpaper_hsh+".png")
+                    os.remove(home_dir + "/wallpaper_"+self.current_wallpaper_hsh+".png")
                 except:
                     pass
 
@@ -148,7 +172,7 @@ class BeengpaperApp(rumps.App):
     def set_region(self,name,menu):
         self.region = name
         self.menu['Region'].title = 'Region (%s)' % region_code[self.region]
-        self.get_new_wallpaper()
+        self.get_new_wallpaper(None)
         self.save_config()
         pass
 
