@@ -25,20 +25,25 @@ import urllib.request
 from threading import Timer
 import rumps
 import os
+import subprocess
 import json
 import logging
 from appscript import *
 from rumps import separator, MenuItem
+from shutil import copyfile
 
 configs = {}
 configs_data = {}
 home_dir = os.path.expanduser('~')+'/.bwg'
+saved_dir = os.path.expanduser('~')+'/.bwg/saved'
 base_wallpaper_url = "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt="
 
 rumps.debug_mode(True)
 
 if not os.path.exists(home_dir):
     os.makedirs(home_dir)
+if not os.path.exists(saved_dir):
+    os.makedirs(saved_dir)
 
 logging.basicConfig(filename=os.path.expanduser('~')+'/.bwg/'+'wallpaper.log',level=logging.DEBUG,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -52,6 +57,7 @@ class BeengpaperApp(rumps.App):
     region = 'en-ww'
     name = 'No wallpaper downloaded'
     copyright = 'No wallpaper downloaded'
+    freezed = False
 
     def __init__(self):
 
@@ -63,9 +69,11 @@ class BeengpaperApp(rumps.App):
             self.current_wallpaper_hsh = config['current_wallpaper_hsh']
             self.name = config['name']
             self.copyright = config['copyright']
+            if 'freezed' in config:
+                self.freezed = bool(config['freezed'])
 
 
-        self.menu = ["About Image", "Image Title", "Image Copyright",separator,"Region",separator,"About Beengpaper"]
+        self.menu = ["About Image", "Image Title", "Image Copyright",separator,"Region",separator,"Keep wallpaper","Save wallpaper","Open saved wallpapers folder",separator,"About Beengpaper"]
         self.icon = 'icon.png'
         self.template = True
 
@@ -73,6 +81,8 @@ class BeengpaperApp(rumps.App):
         print_button.title = self.copyright
         title_button = self.menu['Image Title']
         title_button.title = self.name
+        title_button = self.menu['Keep wallpaper']
+        title_button.state = 1 if self.freezed else 0
 
         self.menu['Region'].add(MenuItem('US', callback=lambda sender: self.set_region('en-us',sender)))
         self.menu['Region'].add(MenuItem('Germany', callback=lambda sender: self.set_region('de-de',sender)))
@@ -96,10 +106,31 @@ class BeengpaperApp(rumps.App):
         window = rumps.alert(title='Beengpaper', message='Get your daily dose of Bing wallpapers on your desktop\nCopyright © 2019 Antoni Sobkowicz / Dragonshorn Studios', ok=None, cancel=None, icon_path='app_icon.png')
         window.run()
 
+    @rumps.clicked("Keep wallpaper")
+    def keep(self, _):
+        self.freezed = not self.freezed
+        logging.info('Is wallpaper freezed: %s', self.freezed)
+
+        title_button = self.menu['Keep wallpaper']
+        title_button.state = 1 if self.freezed else 0
+        self.save_config()
+
+    @rumps.clicked("Save wallpaper")
+    def save(self, _):
+        copyfile(home_dir + "/wallpaper_"+self.current_wallpaper_hsh+".png", saved_dir + "/wallpaper_"+self.current_wallpaper_hsh+".png")
+        pass
+
+    @rumps.clicked("Open saved wallpapers folder")
+    def open_folder(self, _):
+        subprocess.Popen(["open", saved_dir])
+        pass
 
 
-    @rumps.timer(60)
+
+    @rumps.timer(3600)
     def get_new_wallpaper(self, _):
+        if (self.freezed):
+            return
         url = base_wallpaper_url + self.region
         req = urllib.request.Request(url)
         response = urllib.request.urlopen(req)
@@ -166,9 +197,8 @@ class BeengpaperApp(rumps.App):
         pass
 
     def save_config(self):
-        config = {'region': self.region, 'current_wallpaper_hsh': self.current_wallpaper_hsh,'name':self.name,'copyright':self.copyright}
+        config = {'region': self.region, 'current_wallpaper_hsh': self.current_wallpaper_hsh,'name':self.name,'copyright':self.copyright,"freezed":self.freezed}
         json.dump(config, open(home_dir + '/config.json','w'))
-
         logging.info('Saved configuration data')
         pass
 

@@ -47,6 +47,26 @@ A. This may be caused by one of three things:
   think your problem is not related to two above, pleas open an issue on
   GitHub.
  
+**Q. I like current wallpaper, can I keep it?**
+
+A. Of course! If you like wallpaper, just tick "Keep Wallpaper" option
+in menu.
+
+**Q. I like like a lot of wallpapers, can you make Beengpaper change
+them?**
+
+A. Not directly - you can however use "Save Wallpaper" option to save
+current wallpaper to a folder, and "Open saved wallpapers folder" to
+navigate to it and use wallpapers however you want. Please keep in maind
+that if you don't enable "Keep wallpaper" option while using "Change
+wallpaper every ..." preference, Beengpaper will interfere and may force
+macOS to change wallpaper randomly.
+
+**Q. How often Beengpaper checks for new wallpapers?**
+
+A. Every hour. This should be more than enough, since wallpapers change
+daily...
+ 
 **Q. How can I make Beengpaper launch on startup?**
 
 A. Unfortunately, Beengpaper cannot set itself as a launch program. You
